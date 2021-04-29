@@ -30,4 +30,18 @@ public class Ticket {
 	private Parking parking;
 	
 	private LocalDateTime createdAt;
+
+	/**
+	 * @param car
+	 * @param parking
+	 * @param createdAt
+	 */
+	public Ticket(Car car, Parking parking, LocalDateTime createdAt) {
+		super();
+		this.car = car;
+		this.parking = parking;
+		this.createdAt = createdAt;
+	}
+	
+	
 }

@@ -21,7 +21,7 @@ public class Parking {
 	private Integer id;
 	private String address;
 	private Integer places;
-	private Double rate;
+	private Double rateByHour;
 	
 	@OneToMany(mappedBy = "parking")
 	private List<Ticket> tickets;
@@ -31,11 +31,11 @@ public class Parking {
 	 * @param places
 	 * @param rate
 	 */
-	public Parking(String address, Integer places, Double rate) {
+	public Parking(String address, Integer places, Double rateByHour) {
 		super();
 		this.address = address;
 		this.places = places;
-		this.rate = rate;
+		this.rateByHour = rateByHour;
 	}
 	
 	
