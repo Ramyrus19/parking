@@ -43,6 +43,18 @@ public interface ParkingManager {
 	 */
 	public Parking getParkingById(Integer id);
 	/**
+	 * get a car by id
+	 * @param id
+	 * @return the car
+	 */
+	public Car getCarById(Integer id);
+	/**
+	 * get a ticket by id
+	 * @param id
+	 * @return the ticket
+	 */
+	public Ticket getTicketById(Integer id);
+	/**
 	 * create a new car if it doesn't exist in DB
 	 * @param car
 	 */

@@ -5,6 +5,8 @@ package fr.eni.parking;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fr.eni.parking.bll.ParkingManager;
+import fr.eni.parking.bo.Car;
 import fr.eni.parking.bo.Parking;
+import fr.eni.parking.bo.Ticket;
 
 /**
  * @author ramon
@@ -33,6 +37,75 @@ class ParkingManagerTest {
 		Parking fromManager = manager.getParkingById(resistance.getId());
 		
 		assertNotNull(fromManager);
+	}
+	
+	@Test
+	@Transactional
+	void updateParkingTest() {
+		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
+		manager.addParking(resistance);
+		
+		resistance.setPlaces(1000);
+		manager.updateParking(resistance);
+		
+		Parking fromManager = manager.getParkingById(resistance.getId());
+		assertEquals(fromManager.getPlaces(), 1000);
+		
+	}
+	
+	@Test
+	@Transactional
+	void deleteParkingTest() {
+		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
+		manager.addParking(resistance);
+		
+		manager.deleteParking(resistance);
+		
+		Parking fromManager = manager.getParkingById(resistance.getId());
+		
+		assertNull(fromManager);
+	}
+	
+	@Test
+	@Transactional
+	void addCarTest() {
+		Car peugeot = new Car("AB123CD", "Peugeot", "207");
+		manager.addCar(peugeot);
+
+		Car fromManager = manager.getCarById(peugeot.getId());
+		
+		assertNotNull(fromManager);
+	}
+	
+	@Test
+//	@Transactional
+	void generateTicketTest() {
+		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
+		manager.addParking(resistance);
+		
+		Car peugeot = new Car("AB123CD", "Peugeot", "207");
+		manager.addCar(peugeot);
+		
+		Ticket t = manager.generateTicket(peugeot, resistance);
+		
+		Ticket fromManager = manager.getTicketById(t.getId());
+		
+		assertNotNull(fromManager);
+	}
+	
+	@Test
+	void calculateRateTest() {
+		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
+		manager.addParking(resistance);
+		
+		Car peugeot = new Car("AB123CD", "Peugeot", "207");
+		manager.addCar(peugeot);
+		
+		Ticket ticket = manager.generateTicket(peugeot, resistance);
+		ticket.setCreatedAt(LocalDateTime.parse("2021-04-29T09:55:30"));
+		Double total = manager.calculateRate(ticket);
+		
+		assertEquals(total, 5);
 	}
 
 }

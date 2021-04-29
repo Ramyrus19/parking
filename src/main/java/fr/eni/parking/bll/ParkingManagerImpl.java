@@ -3,6 +3,7 @@
  */
 package fr.eni.parking.bll;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,6 +66,16 @@ public class ParkingManagerImpl implements ParkingManager {
 	}
 
 	@Override
+	public Car getCarById(Integer id) {
+		return carDAO.findById(id).orElse(null);
+	}
+	
+	@Override
+	public Ticket getTicketById(Integer id) {
+		return ticketDAO.findById(id).orElse(null);
+	}
+	
+	@Override
 	@Transactional
 	public void addCar(Car car) {
 		carDAO.save(car);
@@ -80,9 +91,13 @@ public class ParkingManagerImpl implements ParkingManager {
 
 	@Override
 	public Double calculateRate(Ticket ticket) {
-		//TODO : calculate the total to pay 
-		//ticket.getParking().getRate() * ticket.getCreatedAt().getHour()-now().getHour()
-		return null;
+		Duration duration = Duration.between(LocalDateTime.now(), ticket.getCreatedAt());
+	    long diff = Math.abs(duration.toHours());
+	    
+	    Double total = ticket.getParking().getRateByHour() * diff;
+	    
+		return total;
 	}
+
 
 }
