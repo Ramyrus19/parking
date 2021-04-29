@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edit parking</title>
+</head>
+<body>
+<form 
+	th:action="@{/parking/update/{id}(id=${parking.id})}" 
+	th:object="${parking}" 
+	method="post">
+    <label for="address">Address :</label>
+    <input type="text" th:field="*{address}" id="address" placeholder="Address">
+    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+    <br>
+    <label for="places">Number of places :</label>
+    <input type="number" th:field="*{places}" id="places" placeholder="Number of places">
+    <span th:if="${#fields.hasErrors('places')}" th:errors="*{places}"></span>
+    <br>
+    <label for="rateByHour">Rate/hour :</label>
+    <input type="text" th:field="*{rateByHour}" id="rateByHour" placeholder="Rate/hour"> €
+    <span th:if="${#fields.hasErrors('rateByHour')}" th:errors="*{rateByHour}"></span>
+    <br>
+    <input type="submit" value="Update">   
+</form>
+</body>
+</html>

@@ -99,5 +99,10 @@ public class ParkingManagerImpl implements ParkingManager {
 		return total;
 	}
 
+	@Override
+	public void removeParkingFromId(Integer id) {
+		parkingDAO.deleteById(id);
+	}
+
 
 }

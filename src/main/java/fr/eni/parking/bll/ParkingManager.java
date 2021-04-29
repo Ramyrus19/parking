@@ -72,4 +72,9 @@ public interface ParkingManager {
 	 * @return the total amount to be paid by the car owner
 	 */
 	public Double calculateRate(Ticket ticket);
+	/**
+	 * delete parking by id
+	 * @param id
+	 */
+	public void removeParkingFromId(Integer id);
 }
