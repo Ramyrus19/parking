@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+<title>Departure</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse justify-content-md-center">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/parking/index">
+              Parkings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ticket/index">
+              Tickets
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ticket/create">
+              Car arrival
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ticket/search">
+              Search ticket
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="container">
+  <div class="row" >
+    <div class="col-6 offset-2">
+    	<h2>Car departure</h2>
+		<form 
+      	th:action="@{/ticket/find}" 
+			th:object="${ticket}" 
+			method="post">
+		    <label for="car">Find ticket for car :</label>
+		    <input class="form-control" type="text" th:field="*{car.licence}" id="car" placeholder="search by licence plate">
+		    <br>
+		    
+		    <input class="btn btn-primary" type="submit" value="Search">  
+		</form>
+		<a class="btn btn-sm btn-secondary mt-3" href="/homepage">Back to home</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

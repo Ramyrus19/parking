@@ -65,47 +65,5 @@ class ParkingManagerTest {
 		
 		assertNull(fromManager);
 	}
-	
-	@Test
-	@Transactional
-	void addCarTest() {
-		Car peugeot = new Car("AB123CD", "Peugeot", "207");
-		manager.addCar(peugeot);
-
-		Car fromManager = manager.getCarById(peugeot.getId());
-		
-		assertNotNull(fromManager);
-	}
-	
-	@Test
-//	@Transactional
-	void generateTicketTest() {
-		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
-		manager.addParking(resistance);
-		
-		Car peugeot = new Car("AB123CD", "Peugeot", "207");
-		manager.addCar(peugeot);
-		
-		Ticket t = manager.generateTicket(peugeot, resistance);
-		
-		Ticket fromManager = manager.getTicketById(t.getId());
-		
-		assertNotNull(fromManager);
-	}
-	
-	@Test
-	void calculateRateTest() {
-		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
-		manager.addParking(resistance);
-		
-		Car peugeot = new Car("AB123CD", "Peugeot", "207");
-		manager.addCar(peugeot);
-		
-		Ticket ticket = manager.generateTicket(peugeot, resistance);
-		ticket.setCreatedAt(LocalDateTime.parse("2021-04-29T09:55:30"));
-		Double total = manager.calculateRate(ticket);
-		
-		assertEquals(total, 5);
-	}
 
 }

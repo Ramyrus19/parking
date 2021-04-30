@@ -10,12 +10,19 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Parking {
 	
 	@Id
@@ -29,7 +36,10 @@ public class Parking {
 	private Double rateByHour;
 	
 	@OneToMany(mappedBy = "parking")
+	@JsonBackReference
 	private List<Ticket> tickets;
+	
+	private Double turnover;
 	
 	/**
 	 * @param address
@@ -41,6 +51,7 @@ public class Parking {
 		this.address = address;
 		this.places = places;
 		this.rateByHour = rateByHour;
+		this.turnover = 0.0;
 	}
 	
 	

@@ -2,16 +2,11 @@ package fr.eni.parking.bll;
 
 import java.util.List;
 
-import fr.eni.parking.bo.Car;
 import fr.eni.parking.bo.Parking;
-import fr.eni.parking.bo.Ticket;
 
 /**
  * Interface for managing a parking :
- * 	- generate parking tickets
- * 	- add cars in DB if they don't exist
  * 	- add, modify, delete and retrieve parkings
- * 	- calculate the price of the tickets
  * @author ramona
  *
  */
@@ -43,38 +38,9 @@ public interface ParkingManager {
 	 */
 	public Parking getParkingById(Integer id);
 	/**
-	 * get a car by id
-	 * @param id
-	 * @return the car
-	 */
-	public Car getCarById(Integer id);
-	/**
-	 * get a ticket by id
-	 * @param id
-	 * @return the ticket
-	 */
-	public Ticket getTicketById(Integer id);
-	/**
-	 * create a new car if it doesn't exist in DB
-	 * @param car
-	 */
-	public void addCar(Car car);
-	/**
-	 * generate a ticket for the arrival of a car
-	 * @param car
-	 * @param parking
-	 * @return the parking ticket
-	 */
-	public Ticket generateTicket(Car car, Parking parking);
-	/**
-	 * calculate the price to pay for the parking
-	 * @param ticket
-	 * @return the total amount to be paid by the car owner
-	 */
-	public Double calculateRate(Ticket ticket);
-	/**
 	 * delete parking by id
 	 * @param id
 	 */
 	public void removeParkingFromId(Integer id);
+	
 }

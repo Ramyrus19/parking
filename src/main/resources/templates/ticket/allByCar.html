@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+<title>Tickets by car</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse justify-content-md-center">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/parking/index">
+              Parkings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ticket/index">
+              Tickets
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ticket/create">
+              Car arrival
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ticket/search">
+              Search ticket
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-2">
+    	<div th:switch="${tickets}">
+		<h2 th:case="null">No tickets available !</h2>
+		<div th:case="*">
+			<h2>List of tickets</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Parking</th>
+						<th>Car</th>
+						<th>Created at</th>
+						<th>Status</th>
+						<th colspan="3">Actions</th>
+					
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ticket : ${tickets}">
+						<td th:text="${ticket.car.licence}"></td>
+						<td th:text="${ticket.parking.address}"></td>
+						<td>
+						    <span th:if="${ticket.status}">Opened</span>
+						    <span th:unless="${ticket.status}">Closed</span>
+						</td>
+						<td th:utext="${#temporals.format(ticket.arrivedAt, 'dd/MM/yyyy HH:mm')}"></td>
+						<td><a class="btn btn-sm btn-warning"
+							th:href="@{/ticket/details/{id}(id=${ticket.id})}">Show</a></td>
+						<td th:if="${ticket.status}"><a class="btn btn-sm btn-primary"
+							 th:href="@{/ticket/close/{id}(id=${ticket.id})}">Print</a></td>
+						<td><a class="btn btn-sm btn-danger"
+							th:href="@{/ticket/delete/{id}(id=${ticket.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a class="btn btn-sm btn-secondary" href="/homepage">Back to list</a>
+		</p>
+	</div>
+      	
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -27,13 +27,13 @@ public class ParkingController {
 	
 	@GetMapping("/parking/create")
 	public String showCreateForm(Parking parking) {
-		return "addParking";
+		return "parking/add";
 	}
 	
 	@PostMapping("/parking/add")
 	public String addParking(@Valid Parking parking, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return "addParking";
+			return "parking/add";
 		}
 		manager.addParking(parking);
 		return "redirect:/parking/index";
@@ -42,7 +42,7 @@ public class ParkingController {
 	@GetMapping("/parking/index")
 	public String listParkings(Model model) {
 		model.addAttribute("parkings", manager.getAllParkings());
-		return "index";
+		return "parking/index";
 	}
 	
 	@GetMapping("/parking/edit/{id}")
@@ -50,7 +50,7 @@ public class ParkingController {
 		Parking parking = manager.getParkingById(id);
 		model.addAttribute("parking", parking);
 		
-		return "updateParking";
+		return "parking/update";
 	}
 	
 	@PostMapping("/parking/update/{id}")
@@ -58,7 +58,7 @@ public class ParkingController {
 			BindingResult result, Model model) {
 		parking.setId(id);
 		if (result.hasErrors()) {
-			return "updateParking";
+			return "parking/update";
 		}
 		manager.updateParking(parking);
 		return "redirect:/parking/index";
@@ -70,4 +70,6 @@ public class ParkingController {
 		
 		return "redirect:/parking/index";
 	}
+	
+	
 }
