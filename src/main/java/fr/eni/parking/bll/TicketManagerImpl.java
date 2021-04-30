@@ -3,6 +3,7 @@ package fr.eni.parking.bll;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -33,12 +34,21 @@ public class TicketManagerImpl implements TicketManager{
 		if (ticketsByParking.size() >= parking.getPlaces()) {
 			throw new TicketManagerException("Le parking est plein");
 		}
-		LocalTime hour = 
-		System.out.println(LocalDateTime.now().getHour());
+		if (isItNight(LocalDateTime.now())) {
+			throw new TicketManagerException("Le parking est fermé !");
+		}
 		Ticket ticket = new Ticket(car, parking, LocalDateTime.now());
 		ticket.setStatus(true);
 		ticketDAO.save(ticket);
 		return ticket;
+	}
+	
+	public Boolean isItNight(LocalDateTime now) {
+		Integer time = Integer.parseInt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmm")));
+		if (time > 1600 || time < 600) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -76,6 +86,20 @@ public class TicketManagerImpl implements TicketManager{
 	@Override
 	public List<Ticket> getActiveTicketsByParking(Parking parking) {
 		return (List<Ticket>) ticketDAO.findActiveTicketsByParking(parking);
+	}
+
+	@Override
+	@Transactional
+	public void closeTicket(Ticket ticket) throws TicketManagerException {
+		if (isItNight(LocalDateTime.now())) {
+			throw new TicketManagerException("Le parking est fermé !");
+		}
+		Ticket t = ticketDAO.findById(ticket.getId()).get();
+		t.setStatus(false);
+		t.setExitAt(LocalDateTime.now());
+		t.setTotal(calculateTotal(t));
+		ticketDAO.save(t);
+		
 	}
 
 }

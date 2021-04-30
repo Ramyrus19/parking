@@ -52,10 +52,8 @@ public class InitDatabase {
 			carManager.addCar(renault);
 			carManager.addCar(citroen);
 			
-			Ticket ticket1 = ticketManager.generateTicket(peugeot, resistance, LocalDateTime.parse("2021-04-29T09:55:30"));			
-			Ticket ticket2 = ticketManager.generateTicket(renault, resistance, LocalDateTime.parse("2021-04-29T12:30:36"));
-			ticketManager.updateTicket(ticket1);
-			ticketManager.updateTicket(ticket2);
+//			Ticket ticket1 = ticketManager.generateTicket(peugeot, resistance, LocalDateTime.parse("2021-04-30T09:55:30"));			
+//			Ticket ticket2 = ticketManager.generateTicket(renault, resistance, LocalDateTime.parse("2021-04-30T12:30:36"));
 			
 			
 			

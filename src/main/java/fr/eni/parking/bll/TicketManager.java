@@ -38,6 +38,14 @@ public interface TicketManager {
 	 * @param ticket
 	 */
 	public void updateTicket(Ticket ticket);
+	
+	/**
+	 * close a ticket
+	 * @param ticket
+	 * @throws TicketManagerException 
+	 */
+	public void closeTicket(Ticket ticket) throws TicketManagerException;
+	
 	/**
 	 * get a list of all tickets
 	 * @return

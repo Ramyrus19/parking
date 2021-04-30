@@ -85,16 +85,21 @@ public class TicketController {
 	@GetMapping("/ticket/close/{id}")
 	public String closeTicket(@PathVariable("id") Integer id, Model model) {
 		Ticket t = ticketManager.getTicketById(id);
-		t.setStatus(false);
-		t.setExitAt(LocalDateTime.now());
-		t.setTotal(ticketManager.calculateTotal(t));
-		ticketManager.updateTicket(t);
-		model.addAttribute("ticket", t);
-		
-		Parking p = t.getParking();
-		Double turnover = p.getTurnover() + t.getTotal();
-		p.setTurnover(turnover);
-		parkingManager.updateParking(p);
+		try {
+			ticketManager.closeTicket(t);
+			model.addAttribute("ticket", t);
+			
+			Parking p = t.getParking();
+			Double turnover = p.getTurnover() + t.getTotal();
+			p.setTurnover(turnover);
+			parkingManager.updateParking(p);
+			
+		} catch (TicketManagerException err) {
+			model.addAttribute("error", err.getMessage());
+			model.addAttribute("tickets", ticketManager.getAllTickets());
+			//TODO : return to index with the error - not working
+			return "redirect:/ticket/index";
+		}
 		
 		return "redirect:/ticket/index";
 	}
