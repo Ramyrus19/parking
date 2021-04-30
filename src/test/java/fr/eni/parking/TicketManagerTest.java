@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import fr.eni.parking.bll.CarManager;
 import fr.eni.parking.bll.ParkingManager;
 import fr.eni.parking.bll.TicketManager;
+import fr.eni.parking.bll.TicketManagerException;
 import fr.eni.parking.bo.Car;
 import fr.eni.parking.bo.Parking;
 import fr.eni.parking.bo.Ticket;
@@ -31,7 +32,7 @@ public class TicketManagerTest {
 	
 	@Test
 	@Transactional
-	void generateTicketTest() {
+	void generateTicketTest() throws TicketManagerException {
 		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
 		parkingManager.addParking(resistance);
 		
@@ -47,7 +48,7 @@ public class TicketManagerTest {
 	
 	@Test
 	@Transactional
-	void calculateRateTest() {
+	void calculateRateTest() throws TicketManagerException {
 		Parking resistance = new Parking("Place de la Resistance", 50, 2.50);
 		parkingManager.addParking(resistance);
 		

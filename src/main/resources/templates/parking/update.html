@@ -7,34 +7,7 @@
 <title>Edit parking</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse justify-content-md-center">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/parking/index">
-              Parkings
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/ticket/index">
-              Tickets
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/ticket/create">
-              Car arrival
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/ticket/search">
-              Search ticket
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<div th:insert="fragments/header :: header"></div>
 <div class="container">
   <div class="row">
     <div class="col-4 offset-4">
@@ -45,18 +18,18 @@
 			method="post">
 		    <label for="address">Address :</label>
 		    <input class="form-control" type="text" th:field="*{address}" id="address" placeholder="Address">
-		    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+		    <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
 		    <br>
 		    <label for="places">Number of places :</label>
 		    <input class="form-control" type="number" th:field="*{places}" id="places" placeholder="Number of places">
-		    <span th:if="${#fields.hasErrors('places')}" th:errors="*{places}"></span>
+		    <span class="text-danger" th:if="${#fields.hasErrors('places')}" th:errors="*{places}"></span>
 		    <br>
 		    <label for="rateByHour">Rate/hour :</label>
 		    <div class="input-group">
 			  <input class="form-control" type="text" th:field="*{rateByHour}" id="rateByHour" placeholder="Rate/hour">
 			  <span class="input-group-text">€</span>
 			</div>
-		    <span th:if="${#fields.hasErrors('rateByHour')}" th:errors="*{rateByHour}"></span>
+		    <span class="text-danger" th:if="${#fields.hasErrors('rateByHour')}" th:errors="*{rateByHour}"></span>
 		    <br>
 		    <input class="btn btn-primary" type="submit" value="Update">  
 		     

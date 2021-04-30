@@ -2,6 +2,7 @@ package fr.eni.parking.bll;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,8 +28,14 @@ public class TicketManagerImpl implements TicketManager{
 
 	@Override
 	@Transactional
-	public Ticket generateTicket(Car car, Parking parking, LocalDateTime arrivedAt) {
-		Ticket ticket = new Ticket(car, parking, arrivedAt);
+	public Ticket generateTicket(Car car, Parking parking, LocalDateTime arrivedAt) throws TicketManagerException {
+		List<Ticket> ticketsByParking = ticketDAO.findActiveTicketsByParking(parking);
+		if (ticketsByParking.size() >= parking.getPlaces()) {
+			throw new TicketManagerException("Le parking est plein");
+		}
+		LocalTime hour = 
+		System.out.println(LocalDateTime.now().getHour());
+		Ticket ticket = new Ticket(car, parking, LocalDateTime.now());
 		ticket.setStatus(true);
 		ticketDAO.save(ticket);
 		return ticket;

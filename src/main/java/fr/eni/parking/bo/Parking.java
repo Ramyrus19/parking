@@ -53,6 +53,12 @@ public class Parking {
 		this.rateByHour = rateByHour;
 		this.turnover = 0.0;
 	}
+
+	@Override
+	public String toString() {
+		return "Parking [id=" + id + ", address=" + address + ", places=" + places + ", rateByHour=" + rateByHour
+				+ ", turnover=" + turnover + "]";
+	}
 	
 	
 }

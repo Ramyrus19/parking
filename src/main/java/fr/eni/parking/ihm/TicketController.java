@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import fr.eni.parking.bll.CarManager;
 import fr.eni.parking.bll.ParkingManager;
 import fr.eni.parking.bll.TicketManager;
+import fr.eni.parking.bll.TicketManagerException;
 import fr.eni.parking.bo.Parking;
 import fr.eni.parking.bo.Ticket;
 
@@ -40,11 +42,17 @@ public class TicketController {
 	
 	@PostMapping("/ticket/add")
 	public String generateTicket(@Valid Ticket ticket, BindingResult result, Model model) {
+		try {
+			ticketManager.generateTicket(ticket.getCar(), ticket.getParking(), LocalDateTime.now());
+		} catch (TicketManagerException err) {
+			result.addError(new ObjectError("global", err.getMessage()));
+			model.addAttribute("cars", carManager.getAllCars());
+			model.addAttribute("parkings", parkingManager.getAllParkings());
+		}			
 		if (result.hasErrors()) {
+			
 			return "ticket/add";
 		}
-		ticketManager.generateTicket(ticket.getCar(), ticket.getParking(), LocalDateTime.now());
-		
 		return "redirect:/ticket/index";
 	}
 	
@@ -93,7 +101,8 @@ public class TicketController {
 	
 	@GetMapping("/ticket/delete/{id}")
 	public String deleteTicket(@PathVariable("id") Integer id, Model model) {
-		ticketManager.removeTicketFromId(id);
+		Ticket fromManager = ticketManager.getTicketById(id);
+		ticketManager.removeTicketFromId(fromManager.getId());
 		
 		return "redirect:/ticket/index";
 	}

@@ -49,6 +49,11 @@ public class Car {
 		this.brand = brand;
 		this.model = model;
 	}
+
+	@Override
+	public String toString() {
+		return "Car [id=" + id + ", licence=" + licence + ", brand=" + brand + ", model=" + model + "]";
+	}
 	
 	
 }

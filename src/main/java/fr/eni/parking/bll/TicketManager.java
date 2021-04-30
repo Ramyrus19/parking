@@ -30,8 +30,9 @@ public interface TicketManager {
 	 * @param car
 	 * @param parking
 	 * @return the parking ticket
+	 * @throws TicketManagerException 
 	 */
-	public Ticket generateTicket(Car car, Parking parking, LocalDateTime arrivedAt);
+	public Ticket generateTicket(Car car, Parking parking, LocalDateTime arrivedAt) throws TicketManagerException;
 	/**
 	 * update a ticket
 	 * @param ticket
